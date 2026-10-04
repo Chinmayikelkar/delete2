@@ -1,0 +1,6 @@
+{
+    "name": "Statistics",
+    "head": "Dr. LMN",
+    "courses": ["Probability", "Data Analysis", "Statistical Methods"],
+    "description": "Department of Statistics focuses on statistical analysis and data interpretation."
+}

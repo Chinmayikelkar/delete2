@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A4 Q3 - Employee Table</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 40px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background: #e9eef5; }
+        tr:hover { background: #f1f5f9; }
+        button {
+            padding: 8px 14px;
+            margin-right: 6px;
+            border: none;
+            border-radius: 4px;
+            background: #2f6fed;
+            color: white;
+            cursor: pointer;
+        }
+        .highlight { background: #fff3a3 !important; }
+        .selected { background: #d8f3dc !important; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Employee Table</h1>
+
+    <button id="first">Select First Employee</button>
+    <button id="last">Select Last Employee</button>
+    <button id="dept">Highlight IT Department</button>
+
+    <table id="employeeTable">
+        <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </tr>
+        <tr><td>101</td><td class="name">Rahul</td><td>IT</td><td>50000</td></tr>
+        <tr><td>102</td><td class="name">Priya</td><td>HR</td><td>45000</td></tr>
+        <tr><td>103</td><td class="name">Amit</td><td>IT</td><td>55000</td></tr>
+        <tr><td>104</td><td class="name">Sneha</td><td>Finance</td><td>60000</td></tr>
+    </table>
+
+    <p id="output"></p>
+</div>
+
+<script>
+$(document).ready(function () {
+    $("#first").click(function () {
+        $("#employeeTable tr").eq(1).addClass("highlight");
+    });
+
+    $("#last").click(function () {
+        $("#employeeTable tr").last().addClass("highlight");
+    });
+
+    $("#dept").click(function () {
+        $("#employeeTable tr").each(function () {
+            if ($(this).find("td").eq(2).text() == "IT") {
+                $(this).addClass("highlight");
+            }
+        });
+    });
+
+    $(".name").click(function () {
+        var row = $(this).parent();
+        row.addClass("selected");
+
+        $("#output").text(
+            "Parent row contains: " + row.text()
+        );
+
+        console.log(
+            "Number of siblings: " + $(this).siblings().length
+        );
+    });
+
+    $("#employeeTable tr").click(function () {
+        console.log(
+            "Number of children: " + $(this).children().length
+        );
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A5 Q2 - FAQ</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 40px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+        .question {
+            background: #e9eef5;
+            padding: 12px;
+            margin-bottom: 2px;
+            cursor: pointer;
+        }
+        .answer {
+            padding: 12px;
+            border: 1px solid #ddd;
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 8px 14px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 4px;
+            background: #2f6fed;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Frequently Asked Questions</h1>
+
+    <button id="expand">Expand All</button>
+    <button id="collapse">Collapse All</button>
+
+    <h3 class="question">What is jQuery?</h3>
+    <div class="answer">jQuery is a JavaScript library used to simplify web development.</div>
+
+    <h3 class="question">Why use jQuery?</h3>
+    <div class="answer">It makes DOM manipulation, events and AJAX easier.</div>
+
+    <h3 class="question">What is AJAX?</h3>
+    <div class="answer">AJAX allows data to be exchanged with a server without reloading the page.</div>
+</div>
+
+<script>
+$(document).ready(function () {
+    $(".answer").hide();
+
+    $(".question").click(function () {
+        $(this).next(".answer").fadeToggle();
+    });
+
+    $("#expand").click(function () {
+        $(".answer").slideDown();
+    });
+
+    $("#collapse").click(function () {
+        $(".answer").slideUp();
+    });
+});
+</script>
+</body>
+</html>

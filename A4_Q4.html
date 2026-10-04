@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A4 Q4 - Student Profile</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 40px;
+        }
+        .container {
+            max-width: 550px;
+            margin: auto;
+            text-align: center;
+        }
+        #profile {
+            background: white;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+            text-align: left;
+        }
+        button {
+            padding: 9px 12px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background: #2f6fed;
+            color: white;
+            cursor: pointer;
+        }
+        .highlight {
+            border: 3px solid #f0ad4e !important;
+            background: #fff8e1 !important;
+        }
+        #status {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="profile">
+        <h2>Student Profile</h2>
+        <p><b>Name:</b> Chinmayi</p>
+        <p><b>Course:</b> B.Sc Computer Science</p>
+        <p><b>College:</b> Fergusson College</p>
+    </div>
+
+    <div>
+        <button id="increase">Increase Font Size</button>
+        <button id="decrease">Decrease Font Size</button>
+        <button id="background">Change Background</button>
+        <button id="highlight">Highlight Profile</button>
+        <button id="reset">Reset</button>
+    </div>
+
+    <p id="status"></p>
+</div>
+
+<script>
+$(document).ready(function () {
+    var fontSize = 16;
+    var backgroundChanged = false;
+
+    function displayStatus() {
+        $("#status").text(
+            "Current Font Size: " + fontSize +
+            "px | Background Changed: " + backgroundChanged
+        );
+    }
+
+    $("#increase").click(function () {
+        fontSize += 2;
+        $("#profile").css("font-size", fontSize + "px");
+        displayStatus();
+    });
+
+    $("#decrease").click(function () {
+        if (fontSize > 8) fontSize -= 2;
+        $("#profile").css("font-size", fontSize + "px");
+        displayStatus();
+    });
+
+    $("#background").click(function () {
+        $("#profile").css("background-color", "#e3f2fd");
+        backgroundChanged = true;
+        displayStatus();
+    });
+
+    $("#highlight").click(function () {
+        $("#profile").addClass("highlight");
+    });
+
+    $("#reset").click(function () {
+        fontSize = 16;
+        backgroundChanged = false;
+
+        $("#profile").css({
+            "font-size": "16px",
+            "background-color": "white"
+        });
+
+        $("#profile").removeClass("highlight");
+        displayStatus();
+    });
+
+    displayStatus();
+});
+</script>
+</body>
+</html>

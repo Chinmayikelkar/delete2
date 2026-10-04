@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A4 Q3 - Employee Table and jQuery Traversal</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .buttons {
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 4px;
+            border: none;
+            border-radius: 4px;
+            background: #2f6fed;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2458bd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #e9eef5;
+        }
+
+        .name {
+            cursor: pointer;
+            color: #2f6fed;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background: #fff3a3 !important;
+        }
+
+        .selected {
+            background: #d8f3dc !important;
+        }
+
+        .parent-cell {
+            background: #ffe0b2 !important;
+        }
+
+        .sibling-cell {
+            background: #e1f5fe !important;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #2f6fed;
+            min-height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Table</h1>
+
+    <p>
+        Click an employee name to highlight the complete row and demonstrate
+        parent and sibling traversal.
+    </p>
+
+    <div class="buttons">
+        <button id="firstBtn">Select First Employee</button>
+        <button id="lastBtn">Select Last Employee</button>
+        <button id="itBtn">Highlight IT Department</button>
+        <button id="parentBtn">Find Parent of Rahul Cell</button>
+        <button id="siblingsBtn">Find Siblings of Rahul</button>
+        <button id="childrenBtn">Find Children of Rahul's Row</button>
+        <button id="clearBtn">Clear Highlights</button>
+    </div>
+
+    <table id="employeeTable">
+
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>101</td>
+                <td class="name">Rahul</td>
+                <td>IT</td>
+                <td>50000</td>
+            </tr>
+
+            <tr>
+                <td>102</td>
+                <td class="name">Priya</td>
+                <td>HR</td>
+                <td>45000</td>
+            </tr>
+
+            <tr>
+                <td>103</td>
+                <td class="name">Amit</td>
+                <td>IT</td>
+                <td>55000</td>
+            </tr>
+
+            <tr>
+                <td>104</td>
+                <td class="name">Sneha</td>
+                <td>Finance</td>
+                <td>60000</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div id="output">
+        Output will appear here.
+    </div>
+
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+    // 1. Select the first employee using .first()
+    $("#firstBtn").click(function () {
+
+        $("#employeeTable tbody tr")
+            .removeClass("highlight");
+
+        $("#employeeTable tbody tr")
+            .first()
+            .addClass("highlight");
+
+        $("#output").text(
+            "First employee selected: Rahul"
+        );
+    });
+
+
+    // 2. Select the last employee using .last()
+    $("#lastBtn").click(function () {
+
+        $("#employeeTable tbody tr")
+            .removeClass("highlight");
+
+        $("#employeeTable tbody tr")
+            .last()
+            .addClass("highlight");
+
+        $("#output").text(
+            "Last employee selected: Sneha"
+        );
+    });
+
+
+    // 3. Highlight employees belonging to IT department
+    $("#itBtn").click(function () {
+
+        $("#employeeTable tbody tr")
+            .removeClass("highlight");
+
+        $("#employeeTable tbody tr").each(function () {
+
+            var department = $(this)
+                .children("td")
+                .eq(2)
+                .text();
+
+            if (department == "IT") {
+                $(this).addClass("highlight");
+            }
+
+        });
+
+        $("#output").text(
+            "Highlighted employees belonging to IT department."
+        );
+    });
+
+
+    // 4. Find the parent of a selected cell
+    $("#parentBtn").click(function () {
+
+        $("#employeeTable td")
+            .removeClass("parent-cell");
+
+        var selectedCell = $("#employeeTable tbody tr")
+            .first()
+            .children("td")
+            .eq(1);
+
+        var parentRow = selectedCell.parent();
+
+        parentRow.addClass("highlight");
+
+        $("#output").html(
+            "<b>.parent()</b> found the parent row of Rahul's Name cell.<br>" +
+            "Parent row: " + parentRow.text()
+        );
+    });
+
+
+    // 5. Find all siblings of a selected element
+    $("#siblingsBtn").click(function () {
+
+        $("#employeeTable td")
+            .removeClass("sibling-cell");
+
+        var selectedCell = $("#employeeTable tbody tr")
+            .first()
+            .children("td")
+            .eq(1);
+
+        var siblings = selectedCell.siblings();
+
+        siblings.addClass("sibling-cell");
+
+        $("#output").html(
+            "<b>.siblings()</b> found " +
+            siblings.length +
+            " sibling cells of Rahul's Name cell."
+        );
+    });
+
+
+    // 6. Find children of a table row
+    $("#childrenBtn").click(function () {
+
+        $("#employeeTable td")
+            .removeClass("parent-cell");
+
+        var selectedRow = $("#employeeTable tbody tr")
+            .first();
+
+        var children = selectedRow.children();
+
+        children.addClass("parent-cell");
+
+        $("#output").html(
+            "<b>.children()</b> found " +
+            children.length +
+            " children of Rahul's row."
+        );
+    });
+
+
+    // 7. Highlight the row when the user clicks an employee name
+    $(".name").click(function () {
+
+        $("#employeeTable tbody tr")
+            .removeClass("selected");
+
+        $(this)
+            .parent()
+            .addClass("selected");
+
+        $("#output").text(
+            "Row highlighted for employee: " +
+            $(this).text()
+        );
+    });
+
+
+    // Clear all highlights
+    $("#clearBtn").click(function () {
+
+        $("#employeeTable tr")
+            .removeClass(
+                "highlight selected parent-cell sibling-cell"
+            );
+
+        $("#output").text("All highlights cleared.");
+    });
+
+});
+
+</script>
+
+</body>
+</html>
