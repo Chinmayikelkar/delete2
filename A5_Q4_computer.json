@@ -1,6 +1,0 @@
-{
-    "name": "Computer Science",
-    "head": "Dr. ABC",
-    "courses": ["Data Science", "Artificial Intelligence", "Web Development"],
-    "description": "Department of Computer Science focuses on computing and software technologies."
-}
